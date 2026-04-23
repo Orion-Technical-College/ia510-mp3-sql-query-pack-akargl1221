@@ -1,17 +1,24 @@
 -- Canonical seed (must stay aligned with MP7 autograde marker: Avery / avery.lopez@example.com).
 
-INSERT INTO customers (name, email)
+INSERT INTO CUSTOMER (CompanyName, Email)
 VALUES
     ('Avery Lopez', 'avery.lopez@example.com'),
     ('Morgan Chen', 'morgan.chen@example.com');
 
-INSERT INTO products (sku, name, unit_price)
+INSERT INTO PRODUCT (ProductID, ProductName, ListPrice)
 VALUES
     ('SKU-001', 'Widget A', 19.99),
     ('SKU-002', 'Widget B', 29.50);
 
-INSERT INTO orders (customer_id, status)
+INSERT INTO ORDERS (CustomerID, Status)
 VALUES (1, 'CONFIRMED');
 
-INSERT INTO order_lines (order_id, product_id, qty, line_total)
-VALUES (1, 1, 2, 39.98);
+INSERT INTO ORDER_LINE (OrderID, ProductID, Qty, UnitPrice)
+VALUES (1, 1, 2, 19.99);
+
+SELECT OrderLineID, Quantity * UnitPrice AS LineTotal
+FROM ORDER_LINE;
+
+SELECT OrderID, SUM(Quantity * UnitPrice) AS TotalAmount
+FROM ORDER_LINE
+GROUP BY OrderID;
