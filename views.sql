@@ -13,9 +13,9 @@ SELECT DISTINCT ON (o.CustomerID)
     o.CustomerID,
     o.OrderID,
     o.Status,
-    o.created_at
+    o.OrderDate
 FROM ORDERS o
-ORDER BY o.CustomerID, o.created_at DESC;
+ORDER BY o.CustomerID, o.OrderDate DESC;
 
 --View for Q4: revenue per product
 CREATE OR REPLACE VIEW v_product_revenue AS

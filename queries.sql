@@ -19,7 +19,7 @@ GROUP BY p.ProductID, p.ProductName
 ORDER BY revenue DESC;
 
 -- Q5: last order per customer (by created_at)
-SELECT DISTINCT ON (c.CustomerID) c.CompanyName, o.OrderID AS order_id, o.Status, o.created_at
+SELECT DISTINCT ON (c.CustomerID) c.CompanyName, o.OrderID AS order_id, o.Status, o.OrderDate,
 FROM CUSTOMER c
 JOIN ORDERS o ON o.CustomerID = c.CustomerID
 ORDER BY c.CustomerID, o.created_at DESC;
