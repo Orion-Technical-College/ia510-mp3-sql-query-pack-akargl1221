@@ -15,7 +15,7 @@ CREATE TABLE SUPPLIER (
     SupplierName VARCHAR(100) NOT NULL,
     ContactName VARCHAR(100),
     Email VARCHAR(150),
-    PaymentTerms VARCHAR(50)
+    PaymentTerms VARCHAR(50),
     created_at TIMESTAMPTZ DEFAULT now()
 );
 
@@ -24,7 +24,7 @@ CREATE TABLE SALES_REP (
     FirstName VARCHAR(50),
     LastName VARCHAR(50),
     Email VARCHAR(150),
-    Region VARCHAR(50)
+    Region VARCHAR(50),
     created_at TIMESTAMPTZ DEFAULT now()
 );
 
@@ -33,7 +33,7 @@ CREATE TABLE WAREHOUSE (
     WarehouseName VARCHAR(100),
     City VARCHAR(50),
     State VARCHAR(50),
-    CapacityUnits INT
+    CapacityUnits INT,
     created_at TIMESTAMPTZ DEFAULT now()
 );
 
@@ -41,11 +41,11 @@ CREATE TABLE PRODUCT (
     ProductID INT PRIMARY KEY,
     ProductName VARCHAR(100) NOT NULL,
     Category VARCHAR(50),
-    ListPrice NUMERIC(10, 2) NOT NULL CHECK (ListPrice >= 0)
+    ListPrice NUMERIC(10, 2) NOT NULL CHECK (ListPrice >= 0),
     SupplierID INT NOT NULL,
     CONSTRAINT fk_product_supplier
         FOREIGN KEY (SupplierID)
-        REFERENCES SUPPLIER(SupplierID)
+        REFERENCES SUPPLIER(SupplierID),
         created_at TIMESTAMPTZ DEFAULT now()
 );
 
@@ -64,7 +64,7 @@ CREATE TABLE ORDERS (
         REFERENCES SALES_REP(SalesRepID),
     CONSTRAINT fk_orders_warehouse
         FOREIGN KEY (WarehouseID)
-        REFERENCES WAREHOUSE(WarehouseID)
+        REFERENCES WAREHOUSE(WarehouseID),
     created_at TIMESTAMPTZ DEFAULT now()
 );
 
@@ -79,7 +79,7 @@ CREATE TABLE ORDER_LINE (
         REFERENCES ORDERS(OrderID) ON DELETE CASCADE,
     CONSTRAINT fk_orderline_product
         FOREIGN KEY (ProductID)
-        REFERENCES PRODUCT(ProductID)
+        REFERENCES PRODUCT(ProductID),
         created_at TIMESTAMPTZ DEFAULT now()
 );
 
@@ -97,7 +97,7 @@ CREATE TABLE INVENTORY (
         FOREIGN KEY (WarehouseID)
         REFERENCES WAREHOUSE(WarehouseID),
     CONSTRAINT uq_inventory_product_warehouse
-        UNIQUE (ProductID, WarehouseID)
+        UNIQUE (ProductID, WarehouseID),
     created_at TIMESTAMPTZ DEFAULT now()
 );
 
@@ -106,5 +106,3 @@ CREATE INDEX idx_order_lines_order ON ORDER_LINE (OrderID);
 CREATE INDEX idx_order_lines_product ON ORDER_LINE (ProductID);
 CREATE INDEX idx_inventory_product_warehouse ON INVENTORY (ProductID, WarehouseID);
 CREATE INDEX idx_product_supplier ON PRODUCT (SupplierID);
-CREATE INDEX idx_salesrep_region ON SALES_REP (Region);
-CREATE INDEX idx_customer_region ON CUSTOMER (Region);
