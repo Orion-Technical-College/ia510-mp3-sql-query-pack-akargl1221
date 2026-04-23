@@ -9,8 +9,7 @@ def _split_sql(sql: str):
         if line.strip().startswith("--"):
             continue
         buf.append(line)
-    text = "
-".join(buf)
+    text = "\n".join(buf)
     for stmt in text.split(";"):
         s = stmt.strip()
         if s:
